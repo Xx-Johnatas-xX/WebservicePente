@@ -254,8 +254,7 @@ router.get('/connect/:joueurName', function(req, res) {
 		joueur1 = createPlayer(playerName, idPlayer);
 		players[idPlayer] = joueur1;
 	}
-		
-	if(joueur2 == null) {
+	else if(joueur2 == null) {
 		joueur2 = createPlayer(playerName, idPlayer);
 		players[idPlayer] = joueur2;
 		setTimeout(prolongation, 10*60*1000);
