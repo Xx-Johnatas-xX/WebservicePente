@@ -298,7 +298,7 @@ router.get('/play/:x/:y/:idJoueur', function(req, res) {
 	
 	Plateau.tours++;
 	dernierCoupX = x;
-	dernierCoupY = Y;
+	dernierCoupY = y;
 	checkPlateau();
 	timeout = setTimeout(playerTakeTooLongTime, 10000);
 });
