@@ -282,6 +282,10 @@ router.get('/play/:x/:y/:idJoueur', function(req, res) {
 		res.status(406);
 		return;
 	}
+	else if(Plateau.tours == 2 && ((x > 6 && x < 12) || (y > 6 && y < 12))) {
+		res.status(406);
+		return;
+	}
 	else if(Plateau.pions[x][y] != PION_VIDE) {
 		res.status(406);
 		return;
