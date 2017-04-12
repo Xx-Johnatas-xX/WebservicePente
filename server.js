@@ -14,8 +14,8 @@ var PION_NOIR  = 2;
 var joueur1 = null;
 var joueur2 = null;
 var players = {};
-var dernierCoupX = -1;
-var dernierCoupY = -1;
+var dernierCoupX = null;
+var dernierCoupY = null;
 var message = "";
 var timeout = null;
 
@@ -78,9 +78,10 @@ function checkPlateau() {
 	var x = dernierCoupX;
 	var y = dernierCoupY;
 	var pion = Plateau.pions[x][y];
+	var pionEnemmi = (pion == PION_BLANC ? PION_NOIR : PION_NOIR);
 
-	if(checkAt(x-1,y-1, pion) != pion)
-		if(checkAt(x-2,y-2, pion) != pion)
+	if(checkAt(x-1,y-1, pion) == pionEnemmi)
+		if(checkAt(x-2,y-2, pion) == pionEnemmi)
 			if(checkAt(x-3,y-3, PION_VIDE) == pion)
 			{
 				Plateau.pions[x-1][y-1] = PION_VIDE;
@@ -91,8 +92,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 			
-	if(checkAt(x-1,y, pion) != pion)
-		if(checkAt(x-2,y, pion) != pion)
+	if(checkAt(x-1,y, pion) == pionEnemmi)
+		if(checkAt(x-2,y, pion) == pionEnemmi)
 			if(checkAt(x-3,y, PION_VIDE) == pion)
 			{
 				Plateau.pions[x-1][y] = PION_VIDE;
@@ -103,8 +104,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 			
-	if(checkAt(x,y-1, pion) != pion)
-		if(checkAt(x,y-2, pion) != pion)
+	if(checkAt(x,y-1, pion) == pionEnemmi)
+		if(checkAt(x,y-2, pion) == pionEnemmi)
 			if(checkAt(x,y-3, PION_VIDE) == pion)
 			{
 				Plateau.pions[x][y-1] = PION_VIDE;
@@ -115,8 +116,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 		
-	if(checkAt(x+1,y-1, pion) != pion)	
-		if(checkAt(x+2,y-2, pion) != pion)
+	if(checkAt(x+1,y-1, pion) == pionEnemmi)	
+		if(checkAt(x+2,y-2, pion) == pionEnemmi)
 			if(checkAt(x+3,y-3, PION_VIDE) == pion)
 			{
 				Plateau.pions[x+1][y-1] = PION_VIDE;
@@ -127,8 +128,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 			
-	if(checkAt(x-1,y+1, pion) != pion)
-		if(checkAt(x-2,y+2, pion) != pion)
+	if(checkAt(x-1,y+1, pion) == pionEnemmi)
+		if(checkAt(x-2,y+2, pion) == pionEnemmi)
 			if(checkAt(x-3,y+3, PION_VIDE) == pion)
 			{
 				Plateau.pions[x-1][y+1] = PION_VIDE;
@@ -139,8 +140,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 	
-	if(checkAt(x+1,y+1, pion) != pion)
-		if(checkAt(x+2,y+2, pion) != pion)
+	if(checkAt(x+1,y+1, pion) == pionEnemmi)
+		if(checkAt(x+2,y+2, pion) == pionEnemmi)
 			if(checkAt(x+3,y+3, PION_VIDE) == pion)
 			{
 				Plateau.pions[x+1][y+1] = PION_VIDE;
@@ -151,8 +152,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 			
-	if(checkAt(x+1,y, pion) != pion)
-		if(checkAt(x+2,y, pion) != pion)
+	if(checkAt(x+1,y, pion) == pionEnemmi)
+		if(checkAt(x+2,y, pion) == pionEnemmi)
 			if(checkAt(x+3,y, PION_VIDE) == pion)
 			{
 				Plateau.pions[x+1][y] = PION_VIDE;
@@ -163,8 +164,8 @@ function checkPlateau() {
 					joueur1.tenaille++;
 			}
 			
-	if(checkAt(x,y+1, pion) != pion)
-		if(checkAt(x,y+2, pion) != pion)
+	if(checkAt(x,y+1, pion) == pionEnemmi)
+		if(checkAt(x,y+2, pion) == pionEnemmi)
 			if(checkAt(x,y+3, PION_VIDE) == pion)
 			{
 				Plateau.pions[x][y+1] = PION_VIDE;
@@ -282,7 +283,7 @@ router.get('/play/:x/:y/:idJoueur', function(req, res) {
 		res.status(406);
 		return;
 	}
-	else if(Plateau.tours == 2 && ((x > 6 && x < 12) || (y > 6 && y < 12))) {
+	else if(Plateau.tours == 2 && x > 6 && x < 12 && y > 6 && y < 12) {
 		res.status(406);
 		return;
 	}
